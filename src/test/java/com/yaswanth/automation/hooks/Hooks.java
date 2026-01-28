@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.yaswanth.automation.driver.DriverFactory;
 import com.yaswanth.automation.utils.ExtentReportManager;
+import com.yaswanth.automation.utils.ScreenshotUtil;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -32,18 +33,20 @@ public class Hooks {
     @After
     public void tearDown(Scenario scenario) {
 
+        String screenshotPath = ScreenshotUtil.takeScreenshot(scenario.getName());
+
         if (scenario.isFailed()) {
-            extentTest.fail("Scenario Failed");
+            extentTest.fail("Scenario Failed")
+                      .addScreenCaptureFromPath(screenshotPath);
         } else {
-            extentTest.pass("Scenario Passed");
+            extentTest.pass("Scenario Passed")
+                      .addScreenCaptureFromPath(screenshotPath);
         }
 
-        // Write report to disk
         extent.flush();
-
-        // Quit browser
         DriverFactory.quitDriver();
 
         System.out.println(">>> AFTER HOOK COMPLETED");
     }
+
 }
