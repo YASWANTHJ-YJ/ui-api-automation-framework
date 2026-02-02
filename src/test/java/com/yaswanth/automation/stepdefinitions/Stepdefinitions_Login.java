@@ -1,6 +1,7 @@
 package com.yaswanth.automation.stepdefinitions;
 
 import java.time.Duration;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,6 +15,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import com.yaswanth.automation.utils.ExcelUtils;
+
 //Cucumber Step Definition class, Cucumber scans this class
 public class Stepdefinitions_Login {
 	
@@ -23,6 +26,8 @@ public class Stepdefinitions_Login {
 	
 	//Page Object
 	private LoginPage loginPage;
+	
+	private Map<String, String> testData;
 
 
      @Given("user is on login page")
@@ -30,15 +35,16 @@ public class Stepdefinitions_Login {
     	// Driver is GUARANTEED to be initialized here
          driver = DriverFactory.getDriver();
 
+         System.out.println("Thread ID: " + Thread.currentThread().getId() +
+        		    " | Scenario running");
+
          driver.get(ConfigReader.getProperty("url"));
          
          // Create page object AFTER driver exists
          loginPage = new LoginPage(driver);
-
-         
         //loginPage.openLoginPage();
     }
-
+/*
     @When("user enters valid username and password")
     public void user_enters_valid_username_and_password() {
         
@@ -51,22 +57,40 @@ public class Stepdefinitions_Login {
 //    	loginPage.enterUsername("student");
 //        loginPage.enterPassword("Password123");
     }
+    */
+    
 
-    @Then("user should be logged in successfully")
-    public void user_should_be_logged_in_successfully() {
+    @When("user enters {string} username and password")
+    public void user_enters_valid_username_and_password(String testType) {
 
-        loginPage.clickLogin();
-        
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.titleContains("Logged In Successfully | Practice Test Automation"));
+    	testData = ExcelUtils.getTestData("LoginData", testType);
 
-
-        String actualTitle = loginPage.getPageTitle();
-        
-        System.out.println("Actual title: " + actualTitle);
-
-
-        
+    	System.out.println("Username: " + testData.get("username"));
+    	System.out.println("Password: " + testData.get("password"));
+    	
+    	loginPage.enterUsername(testData.get("username"));
+        loginPage.enterPassword(testData.get("password"));
+        loginPage.clickLogin();        
     }
+
+    @Then("login should be {string}")
+    public void login_should_be(String expectedResult) {
+
+    	 
+        if (expectedResult.equalsIgnoreCase("success")) {
+        	
+        	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.titleContains("Logged In Successfully"));
+
+            String actualTitle = loginPage.getPageTitle();
+            
+            System.out.println("Actual title: " + actualTitle);
+            
+            loginPage.verifyLoginSuccess();
+        } else {
+            loginPage.verifyLoginFailure();
+        }
+    }
+    
 
 }

@@ -2,6 +2,7 @@ package com.yaswanth.automation.hooks;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.yaswanth.automation.config.ConfigReader;
 import com.yaswanth.automation.driver.DriverFactory;
 import com.yaswanth.automation.utils.ExtentReportManager;
 import com.yaswanth.automation.utils.ScreenshotUtil;
@@ -21,6 +22,9 @@ public class Hooks {
         System.out.println(">>> BEFORE HOOK STARTED");
 
         // Initialize WebDriver
+//        String browser = ConfigReader.getProperty("browser");
+//        DriverFactory.initDriver(browser);
+
         DriverFactory.initDriver();
 
         // Initialize Extent Report

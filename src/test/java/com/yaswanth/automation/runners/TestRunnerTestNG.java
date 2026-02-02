@@ -1,5 +1,7 @@
 package com.yaswanth.automation.runners;
 
+import org.testng.annotations.DataProvider;
+
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
@@ -26,4 +28,15 @@ import io.cucumber.testng.CucumberOptions;
         monochrome = true
 )
 public class TestRunnerTestNG extends AbstractTestNGCucumberTests {
+
+	@Override
+	//Each scenario runs in a separate TestNG thread
+    //Without this: Everything runs sequentially
+    //Even if TestNG is configured for parallel
+    @DataProvider(parallel = true)
+    public Object[][] scenarios() {
+		//This gives TestNG all Cucumber scenarios as test data
+		//Each scenario becomes one TestNG test
+        return super.scenarios();
+    }
 }

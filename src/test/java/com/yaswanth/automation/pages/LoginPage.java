@@ -25,6 +25,9 @@ public class LoginPage {
     private By usernameField = By.id("username");
     private By passwordField = By.id("password");
     private By loginButton   = By.id("submit");
+    private By successMsg = By.xpath("//*[@class='post-title']");
+    private By errorMsg = By.id("error");
+
 
     // ================= ACTION METHODS =================
     public void enterUsername(String username) {
@@ -43,6 +46,17 @@ public class LoginPage {
     //Step definition decides pass/fail
     public String getPageTitle() {
         return driver.getTitle();
+    }
+    
+    public boolean verifyLoginSuccess() {
+        // Example check – customize
+    	return driver.findElement(successMsg).isDisplayed();
+    }
+
+    public boolean verifyLoginFailure() {
+        
+    	return driver.findElement(errorMsg).isDisplayed();
+       
     }
 
 	

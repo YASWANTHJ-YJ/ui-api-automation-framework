@@ -82,11 +82,63 @@ Adding logback-classic resolves it.”
     <version>1.4.14</version>
 </dependency>
 
+
+<!-- Log4j2 API -->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-api</artifactId>
+    <version>2.22.1</version>
+</dependency>
+
+<!-- Log4j2 Core (THIS is missing now) -->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-core</artifactId>
+    <version>2.22.1</version>
+</dependency>
+
+<!-- Excel Reading-->
+
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>5.2.5</version>
+</dependency>
+
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>5.2.5</version>
+</dependency>
+
 </dependencies>
 
 <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
 </properties>
+
+<profiles>
+    <profile>
+        <id>chrome</id>
+        <properties>
+            <browser>chrome</browser>
+        </properties>
+    </profile>
+
+    <profile>
+        <id>firefox</id>
+        <properties>
+            <browser>firefox</browser>
+        </properties>
+    </profile>
+    <profile>
+        <id>edge</id>
+        <properties>
+            <browser>edge</browser>
+        </properties>
+    </profile>
+</profiles>
+
 
 </project>

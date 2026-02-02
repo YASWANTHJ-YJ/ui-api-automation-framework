@@ -2,6 +2,9 @@ package com.yaswanth.automation.driver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import com.yaswanth.automation.config.ConfigReader;
 
@@ -30,13 +33,33 @@ public class DriverFactory {
     	
     		String browser = ConfigReader.getProperty("browser");
 
+    		System.out.println("Browser from config: " + browser);
+
     		if (browser.equalsIgnoreCase("chrome")) {
     		    WebDriverManager.chromedriver().setup();
-    		    WebDriver tdriver = new ChromeDriver();
-    		    
-        // Create a new Chrome instance and assign it to the current thread
-        driver.set(tdriver);
+    		    WebDriver cdriver = new ChromeDriver();
+    		    // Create a new Chrome instance and assign it to the current thread
+                driver.set(cdriver);
     		}
+    		else if (browser.equalsIgnoreCase("firefox")) {
+                WebDriverManager.firefoxdriver().setup();
+                WebDriver fdriver = new FirefoxDriver();
+                //tlDriver.set(new FirefoxDriver());
+                driver.set(fdriver);
+            }
+    		else if (browser.equalsIgnoreCase("edge")) {
+                WebDriverManager.edgedriver().setup();
+                WebDriver edriver = new EdgeDriver();
+                //tlDriver.set(new FirefoxDriver());
+                driver.set(edriver);
+            }
+    		else {
+                throw new RuntimeException("Invalid browser name: " + browser);
+            }
+    		getDriver().manage().window().maximize();
+    		
+    		
+
     	
     }
     }
@@ -59,4 +82,6 @@ public class DriverFactory {
             driver.remove();    // Clear the ThreadLocal variable
         }
     }
+
+	
 }
