@@ -3,6 +3,8 @@ package com.yaswanth.automation.driver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import com.yaswanth.automation.config.ConfigReader;
+
 
 /**
  * DriverFactory Class: Manages the lifecycle of the WebDriver.
@@ -20,16 +22,23 @@ public class DriverFactory {
      * @return WebDriver instance
      */
     
-    public static WebDriver initDriver() {
+    public static void initDriver() {
+    	if (driver.get() == null) {
     	
         // This is why we needed the Maven folder—it provides WebDriverManager!
     	// Automatically manages the downloading and setting up of ChromeDriver
     	
-        WebDriverManager.chromedriver().setup();
-        
+    		String browser = ConfigReader.getProperty("browser");
+
+    		if (browser.equalsIgnoreCase("chrome")) {
+    		    WebDriverManager.chromedriver().setup();
+    		    WebDriver tdriver = new ChromeDriver();
+    		    
         // Create a new Chrome instance and assign it to the current thread
-        driver.set(new ChromeDriver());
-        return getDriver();
+        driver.set(tdriver);
+    		}
+    	
+    }
     }
 
     /**

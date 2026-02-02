@@ -15,7 +15,7 @@ public class ExtentReportManager {
                     new ExtentSparkReporter("test-output/ExtentReport.html");
 
             spark.config().setReportName("UI Automation Test Report");
-            spark.config().setDocumentTitle("Automation Results");
+            spark.config().setDocumentTitle("Test Execution Report");
 
             extent = new ExtentReports();
             extent.attachReporter(spark);

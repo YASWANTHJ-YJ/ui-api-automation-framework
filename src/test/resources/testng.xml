@@ -6,4 +6,10 @@
             <class name="com.yaswanth.automation.runners.TestRunnerTestNG"/>
         </classes>
     </test>
+    
+    <test name="Rerun Failed">
+        <classes>
+            <class name="com.yaswanth.automation.runners.RerunTestRunner"/>
+        </classes>
+    </test>
 </suite>

@@ -1,15 +1,18 @@
 package com.yaswanth.automation.stepdefinitions;
 
-import com.yaswanth.automation.driver.DriverFactory;
-import com.yaswanth.automation.pages.LoginPage;
-import io.cucumber.java.en.*;
-
 import java.time.Duration;
 
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.yaswanth.automation.config.ConfigReader;
+import com.yaswanth.automation.driver.DriverFactory;
+import com.yaswanth.automation.pages.LoginPage;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 //Cucumber Step Definition class, Cucumber scans this class
 public class Stepdefinitions_Login {
@@ -27,7 +30,7 @@ public class Stepdefinitions_Login {
     	// Driver is GUARANTEED to be initialized here
          driver = DriverFactory.getDriver();
 
-         driver.get("https://practicetestautomation.com/practice-test-login/");
+         driver.get(ConfigReader.getProperty("url"));
          
          // Create page object AFTER driver exists
          loginPage = new LoginPage(driver);
@@ -38,8 +41,15 @@ public class Stepdefinitions_Login {
 
     @When("user enters valid username and password")
     public void user_enters_valid_username_and_password() {
-        loginPage.enterUsername("student");
-        loginPage.enterPassword("Password123");
+        
+    	String username = ConfigReader.getProperty("username");
+        String password = ConfigReader.getProperty("password");
+
+        //loginPage.login(username, password);
+        loginPage.enterUsername(username);
+        loginPage.enterPassword(password);
+//    	loginPage.enterUsername("student");
+//        loginPage.enterPassword("Password123");
     }
 
     @Then("user should be logged in successfully")

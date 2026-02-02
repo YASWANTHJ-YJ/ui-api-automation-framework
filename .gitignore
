@@ -1,0 +1,28 @@
+# Maven
+target/
+*.log
+
+# Reports & Screenshots
+test-output/
+reports/
+extent-reports/
+screenshots/
+
+# WebDriver binaries
+drivers/
+*.exe
+
+# IDE files
+.idea/
+.project
+.classpath
+.settings/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Secrets
+config.properties
+*.env

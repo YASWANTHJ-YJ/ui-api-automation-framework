@@ -16,7 +16,10 @@ import io.cucumber.testng.CucumberOptions;
         // Generates HTML report after run
         plugin = {
                 "pretty",
-                "html:target/cucumber-reports.html"
+                "html:target/cucumber-reports.html",
+                //To rerun failed testcases,
+                //RetryAnalyzer is suitable for TestNG tests, not Cucumber scenarios. For Cucumber, rerun plugin is the industry-standard solution.
+               // "rerun:target/rerun.txt"
         },
         
         //Makes console output readable
